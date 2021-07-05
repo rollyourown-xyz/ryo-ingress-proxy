@@ -24,7 +24,7 @@ errorMessage()
 }
 
 # Module ID
-module_id='ryo-service-proxy-discovery-config'
+module_id='ryo-service-proxy'
 
 while getopts n:v:h flag
 do

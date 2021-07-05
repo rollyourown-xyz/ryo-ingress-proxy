@@ -47,7 +47,7 @@ then
 fi
 
 
-echo "Building images for ryo-service-proxy-discovery-config module on "$hostname""
+echo "Building images for ryo-service-proxy module on "$hostname""
 echo ""
 echo "Building Consul image"
 echo "Executing command: packer build -var \"host_id="$hostname"\" -var \"version="$version"\" "$SCRIPT_DIR"/image-build/consul.pkr.hcl"
