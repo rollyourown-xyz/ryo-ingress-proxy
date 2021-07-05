@@ -1,0 +1,16 @@
+#!/bin/sh
+
+# concatentated certificates
+{{range ls "service/certbot"}}
+cat /etc/letsencrypt/live/{{.Key}}/fullchain.pem /etc/letsencrypt/live/{{.Key}}/privkey.pem > /etc/haproxy/ssl/{{.Key}}.pem{{end}}
+
+# non-concatentated certificates
+{{range ls "service/certbot"}}
+cp /etc/letsencrypt/live/{{.Key}}/cert.pem /var/certs/{{.Key}}.cert.pem
+chmod 644 /var/certs/{{.Key}}.cert.pem
+cp /etc/letsencrypt/live/{{.Key}}/privkey.pem /var/certs/{{.Key}}.key.pem
+chmod 644 /var/certs/{{.Key}}.key.pem
+{{end}}
+
+# Call haproxy reload
+service haproxy reload

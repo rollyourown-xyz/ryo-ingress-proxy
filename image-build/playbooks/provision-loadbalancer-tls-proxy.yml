@@ -1,0 +1,24 @@
+---
+- name: Provision load balancer / TLS proxy container image
+  hosts: packer
+
+  vars_files:
+    # Module configuration file
+    - "{{ playbook_dir }}/../../configuration/configuration.yml"
+
+  roles:
+    - role: upgrade-container
+    - role: install-iptables
+    - role: install-unzip
+    - role: install-cron
+    - role: install-haproxy
+    - role: install-certbot
+    - role: install-webhook
+    - role: install-consul
+    - role: install-consul-template
+    - role: set-up-firewall
+    - role: set-up-consul
+    - role: set-up-haproxy
+    - role: set-up-certbot
+    - role: set-up-webhook
+    - role: set-up-consul-template

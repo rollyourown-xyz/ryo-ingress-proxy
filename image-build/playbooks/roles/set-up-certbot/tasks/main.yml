@@ -1,0 +1,21 @@
+---
+
+# Copy empty certbot initialisation and deployment scripts (making executable)
+#
+- name: Copy certbot initialisation script
+  copy:
+    mode: 0770
+    owner: root
+    group: root
+    dest: /usr/local/bin/certbot-initialise.sh
+    src: certbot-initialise.sh
+    force: yes
+
+- name: Copy certbot deployment script
+  copy:
+    mode: 0770
+    owner: root
+    group: root
+    dest: /usr/local/bin/cert-deploy.sh
+    src: cert-deploy.sh
+    force: yes

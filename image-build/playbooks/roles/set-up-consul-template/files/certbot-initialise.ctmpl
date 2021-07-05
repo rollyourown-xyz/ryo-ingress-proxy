@@ -1,0 +1,4 @@
+#!/bin/sh
+CBT="/snap/bin/certbot"
+{{range ls "service/certbot"}}
+$CBT certonly -n --standalone --agree-tos --preferred-challenges http --http-01-port 8080 --deploy-hook /usr/local/bin/cert-deploy.sh -m {{.Value}} -d {{.Key}}{{end}}
