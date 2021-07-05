@@ -1,0 +1,57 @@
+---
+## The generic directory /var/containers/{{ module_id }}
+## for LXD container persistent storage must be created
+## Further module-specific container directories should be
+## added here
+## -----------------------------------------------------------
+
+## Directories for module-specific LXD container persistent storage
+## -----------------------------------------------------------------
+
+- name: Create a directory to mount in module containers
+  file:
+    path: "/var/containers/{{ module_id }}"
+    state: directory
+    mode: '0755'
+
+### Consul directories
+
+- name: Create a directory to mount in consul containers
+  file:
+    path: "/var/containers/{{ module_id }}/consul"
+    state: directory
+    mode: '0755'
+
+- name: Create a directory for consul data
+  file:
+    path: "/var/containers/{{ module_id }}/consul/data"
+    state: directory
+    mode: '0755'
+
+### Cetbot directory
+
+- name: Create a directory to mount in certbot containers
+  file:
+    path: "/var/containers/{{ module_id }}/certbot"
+    state: directory
+    mode: '0755'
+
+### TLS certificates directories
+
+- name: Create a directory to mount in containers needing TLS certificates
+  file:
+    path: "/var/containers/{{ module_id }}/tls"
+    state: directory
+    mode: '0755'
+
+- name: Create a directory to mount in containers needing concatenated TLS certificates
+  file:
+    path: "/var/containers/{{ module_id }}/tls/concatenated"
+    state: directory
+    mode: '0755'
+
+- name: Create a directory to mount in containers needing non-concatenated TLS certificates
+  file:
+    path: "/var/containers/{{ module_id }}/tls/non-concatenated"
+    state: directory
+    mode: '0755'
