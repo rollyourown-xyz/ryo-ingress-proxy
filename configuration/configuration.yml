@@ -6,4 +6,4 @@
 #---------------------------
 
 # Do not change this unless you know what you are doing 
-module_id: ryo-service-proxy-discovery-config
+module_id: ryo-service-proxy
