@@ -1,0 +1,15 @@
+#cloud-config
+package_upgrade: false
+write_files:
+- path: /usr/local/bin/iptables-rules-project.sh
+  content: |
+    #!/bin/sh
+    IPT="/sbin/iptables"
+    #
+    # HTTP and HTTPS already allowed in module setup. Add further ports here if needed for the project
+    #
+    # E.g. Allow TCP port XXX
+    #$IPT -A INPUT -p tcp -m tcp --dport XXX -j ACCEPT
+    #
+  permissions: '0770'
+  owner: root:root
