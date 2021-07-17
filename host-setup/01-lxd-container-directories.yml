@@ -1,5 +1,5 @@
 ---
-- name: "Set up module-specific LXD container directories for ryo-loadbalancer-tls-proxy module on the host {{ host_id }}"
+- name: "Set up module-specific LXD container directories for ryo-service-proxy module on the host {{ host_id }}"
   hosts: host_wireguard_ip
   
   vars_files:
