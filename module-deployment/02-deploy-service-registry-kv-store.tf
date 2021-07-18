@@ -20,7 +20,7 @@ resource "lxd_container" "consul" {
     properties = {
       name           = "eth0"
       network        = var.host_id
-      "ipv4.address" = join(".", [ local.lxd_br0_network_part, "10" ])
+      "ipv4.address" = join(".", [ local.lxd_host_network_part, "10" ])
     }
   }
   

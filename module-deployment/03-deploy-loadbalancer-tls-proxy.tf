@@ -23,7 +23,7 @@ resource "lxd_container" "haproxy" {
     properties = {
       name           = "eth0"
       network        = var.host_id
-      "ipv4.address" = join(".", [ local.lxd_br0_network_part, "11" ])
+      "ipv4.address" = join(".", [ local.lxd_host_network_part, "11" ])
     }
   }
   
@@ -36,7 +36,7 @@ resource "lxd_container" "haproxy" {
 
     properties = {
       listen  = join("", [ "tcp:", local.lxd_host_public_ipv4_address, ":80" ] )
-      connect = join("", [ "tcp:", local.lxd_br0_network_part, ".11", ":80" ] )
+      connect = join("", [ "tcp:", local.lxd_host_network_part, ".11", ":80" ] )
       nat     = "yes"
     }
   }
@@ -48,7 +48,7 @@ resource "lxd_container" "haproxy" {
 
     properties = {
       listen  = join("", [ "tcp:", local.lxd_host_public_ipv4_address, ":443" ] )
-      connect = join("", [ "tcp:", local.lxd_br0_network_part, ".11", ":443" ] )
+      connect = join("", [ "tcp:", local.lxd_host_network_part, ".11", ":443" ] )
       nat     = "yes"
     }
   }
