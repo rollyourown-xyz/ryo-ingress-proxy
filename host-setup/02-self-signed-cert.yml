@@ -1,5 +1,5 @@
 ---
-- name: Create a self-signed SSL cert for first-time haproxy start
+- name: Copy self-signed SSL certs for first-time haproxy start
   hosts: host_wireguard_ip
   
   vars_files:
