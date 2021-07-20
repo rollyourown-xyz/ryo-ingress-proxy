@@ -29,7 +29,7 @@ errorMessage()
 webhook_version='2.8.0'
 consul_template_version='0.26.0'
 
-while getopts n:v:h flag
+while getopts n:w:c:v:h flag
 do
     case "${flag}" in
         n) hostname=${OPTARG};;
