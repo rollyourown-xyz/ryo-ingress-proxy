@@ -22,7 +22,9 @@ locals {
 
 # Basic module variables
 locals {
-  module_id  = yamldecode(file(local.module_configuration))["module_id"]
+  module_id                 = yamldecode(file(local.module_configuration))["module_id"]
+  consul_ip_addr_host_part  = yamldecode(file(local.module_configuration))["consul_ip_addr_host_part"]
+  haproxy_ip_addr_host_part = yamldecode(file(local.module_configuration))["haproxy_ip_addr_host_part"]
 }
 
 # LXD variables
