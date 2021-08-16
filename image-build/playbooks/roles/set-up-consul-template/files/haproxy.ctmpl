@@ -112,7 +112,7 @@ frontend http_443
 
    ## Deny http traffic with 403 forbidden
    {{range ls "service/haproxy/deny"}}{{$aclname := printf .Key}}{{$aclhostcondition := print "service/haproxy/acl/" $aclname "/host"}}{{$aclpathcondition := print "service/haproxy/acl/" $aclname "/path"}}{{if keyExists $aclpathcondition}}
-   http-request deny deny_status 403 if { hdr(host) -i {{key $aclhostcondition}} } { path_beg -i {{key $aclpathcondition}} }{{end}}{{end}}
+   http-request deny deny_status 403 if { hdr(host) -i {{key $aclhostcondition}} } { path_beg,url_dec -i {{key $aclpathcondition}} }{{end}}{{end}}
    {{range ls "service/haproxy/deny"}}{{$aclname := printf .Key}}{{$aclhostcondition := print "service/haproxy/acl/" $aclname "/host"}}{{$aclpathcondition := print "service/haproxy/acl/" $aclname "/path"}}{{if not (keyExists $aclpathcondition)}}
    http-request deny deny_status 403 if { hdr(host) -i {{key $aclhostcondition}} }{{end}}{{end}}
 
