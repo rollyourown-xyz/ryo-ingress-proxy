@@ -40,3 +40,15 @@
     dest: /usr/local/bin/reload-haproxy.sh
     src: reload-haproxy.sh
     force: yes
+
+
+# Copy haproxy consul service configuration file
+#
+- name: haproxy consul service configuration file
+  copy:
+    mode: 0640
+    owner: consul
+    group: consul
+    dest: /etc/consul.d/haproxy-service.hcl
+    src: haproxy-service.hcl
+    force: yes
