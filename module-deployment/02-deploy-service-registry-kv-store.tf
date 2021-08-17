@@ -3,7 +3,7 @@
 
 resource "lxd_container" "consul" {
   remote     = var.host_id
-  name       = join("-", [ var.host_id, local.module_id, "consul" ])
+  name       = "consul"
   image      = join("-", [ local.module_id, "consul", var.image_version ])
   profiles   = ["default"]
   
