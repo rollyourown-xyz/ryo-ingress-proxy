@@ -11,7 +11,7 @@ helpMessage()
    echo "Flags:"
    echo -e "-n hostname \t\t(Mandatory) Name of the host for which to build images"
    echo -e "-w webhook_version \t(Optional) Override default webhook version to use for the loadbalancer-tls-proxy image, e.g. 2.8.0 (default)"
-   echo -e "-c consul_template_version \t(Optional) Override default consul-template version to use for the loadbalancer-tls-proxy image, e.g. 0.25.2 (default)"
+   echo -e "-c consul_template_version \t(Optional) Override default consul-template version to use for the loadbalancer-tls-proxy image, e.g. 0.27.0 (default)"
    echo -e "-v version \t\t(Mandatory) Version stamp to apply to images, e.g. 20210101-1"
    echo -e "-h \t\t\tPrint this help message"
    echo ""
@@ -27,7 +27,7 @@ errorMessage()
 
 # Default webhook and consul-template versions
 webhook_version='2.8.0'
-consul_template_version='0.26.0'
+consul_template_version='0.27.0'
 
 while getopts n:w:c:v:h flag
 do
