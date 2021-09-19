@@ -12,7 +12,7 @@ variable "haproxy_host_path_acls" {
 variable "haproxy_path_only_acls" {
   description = "Map of path-only ACLs for haproxy configuration."
   type = map(object({
-    host = string
+    path = string
   }))
   default = {}
 }
