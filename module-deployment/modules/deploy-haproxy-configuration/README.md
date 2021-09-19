@@ -2,17 +2,23 @@
 
 This module deploys key-value pairs to consul KV store for use by the haproxy service. ACLs, deny rules and use-backend rules are specified by input variables:
 
-## haproxy_host_only_acls (map of objects)
-
-Map of host-only ACLs for haproxy configuration. Each object must be a map. The object key is the ACL name and the object 'host' value is the ACL host. The form for a map is:
-
-        acl_name = {host = string}
-
 ## haproxy_host_path_acls (map of objects)
 
 Map of host/path ACLs for haproxy configuration. Each object must be a map. The object key is the ACL name, the object 'host' value is the ACL host and the object 'path' value is the ACL path. The form for a map is:
 
         acl_name = {host = string, path = string}
+
+## haproxy_path_only_acls (map of objects)
+
+Map of path-only ACLs for haproxy configuration. Each object must be a map. The object key is the ACL name and the object 'path' value is the ACL path. The form for a map is:
+
+        acl_name = {path = string}
+
+## haproxy_host_only_acls (map of objects)
+
+Map of host-only ACLs for haproxy configuration. Each object must be a map. The object key is the ACL name and the object 'host' value is the ACL host. The form for a map is:
+
+        acl_name = {host = string}
 
 ## haproxy_acl_denys (list of strings)
 

@@ -102,25 +102,43 @@ frontend http_80
 
 # HTTPS Frontend
 frontend http_443
-   bind :::443 v4v6 ssl crt /etc/haproxy/ssl/ alpn h2,http/1.1
+   bind :::443 v4v6 ssl crt /etc/haproxy/ssl/ strict-sni alpn h2,http/1.1
    option forwardfor
    option http-server-close
    option http-pretend-keepalive
    http-request set-header X-Forwarded-Proto https if { ssl_fc }
    http-request set-header X-Forwarded-Proto http if !{ ssl_fc }
+   http-request set-header X-Forwarded-For %[src]
    http-response set-header Strict-Transport-Security "max-age=16000000; includeSubDomains;"
 
-   ## Deny http traffic with 403 forbidden
-   {{range ls "service/haproxy/deny"}}{{$aclname := printf .Key}}{{$aclhostcondition := print "service/haproxy/acl/" $aclname "/host"}}{{$aclpathcondition := print "service/haproxy/acl/" $aclname "/path"}}{{if keyExists $aclpathcondition}}
+   ## Deny http traffic with 403 forbidden <<<--- OLD
+   #{{range ls "service/haproxy/deny"}}{{$aclname := printf .Key}}{{$aclhostcondition := print "service/haproxy/acl/" $aclname "/host"}}{{$aclpathcondition := print "service/haproxy/acl/" $aclname "/path"}}{{if keyExists $aclpathcondition}}
+   #http-request deny deny_status 403 if { hdr(host) -i {{key $aclhostcondition}} } { path_beg,url_dec -i {{key $aclpathcondition}} }{{end}}{{end}}
+   #{{range ls "service/haproxy/deny"}}{{$aclname := printf .Key}}{{$aclhostcondition := print "service/haproxy/acl/" $aclname "/host"}}{{$aclpathcondition := print "service/haproxy/acl/" $aclname "/path"}}{{if not (keyExists $aclpathcondition)}}
+   #http-request deny deny_status 403 if { hdr(host) -i {{key $aclhostcondition}} }{{end}}{{end}}
+
+   ## Deny http traffic with 403 forbidden <<<--- NEW - NEEDS TESTING !!!
+   {{range ls "service/haproxy/deny"}}{{$aclname := printf .Key}}{{$aclhostcondition := print "service/haproxy/acl/" $aclname "/host"}}{{$aclpathcondition := print "service/haproxy/acl/" $aclname "/path"}}{{if and (keyExists $aclhostcondition) (keyExists $aclpathcondition)}}
    http-request deny deny_status 403 if { hdr(host) -i {{key $aclhostcondition}} } { path_beg,url_dec -i {{key $aclpathcondition}} }{{end}}{{end}}
-   {{range ls "service/haproxy/deny"}}{{$aclname := printf .Key}}{{$aclhostcondition := print "service/haproxy/acl/" $aclname "/host"}}{{$aclpathcondition := print "service/haproxy/acl/" $aclname "/path"}}{{if not (keyExists $aclpathcondition)}}
+   {{range ls "service/haproxy/deny"}}{{$aclname := printf .Key}}{{$aclhostcondition := print "service/haproxy/acl/" $aclname "/host"}}{{$aclpathcondition := print "service/haproxy/acl/" $aclname "/path"}}{{ if and (not (keyExists $aclhostcondition)) (keyExists $aclpathcondition) }}
+   http-request deny deny_status 403 if { path_beg,url_dec -i {{key $aclpathcondition}} }{{end}}{{end}}
+   {{range ls "service/haproxy/deny"}}{{$aclname := printf .Key}}{{$aclhostcondition := print "service/haproxy/acl/" $aclname "/host"}}{{$aclpathcondition := print "service/haproxy/acl/" $aclname "/path"}}{{ if and (keyExists $aclhostcondition) (not (keyExists $aclpathcondition)) }}
    http-request deny deny_status 403 if { hdr(host) -i {{key $aclhostcondition}} }{{end}}{{end}}
 
-   ## Backend rules
-   {{range ls "service/haproxy/use-backend"}}{{$aclname := printf .Key}}{{$aclhostcondition := print "service/haproxy/acl/" $aclname "/host"}}{{$aclpathcondition := print "service/haproxy/acl/" $aclname "/path"}}{{if keyExists $aclpathcondition}}
+   ## Backend rules ## <<<--- OLD
+   #{{range ls "service/haproxy/use-backend"}}{{$aclname := printf .Key}}{{$aclhostcondition := print "service/haproxy/acl/" $aclname "/host"}}{{$aclpathcondition := print "service/haproxy/acl/" $aclname "/path"}}{{if keyExists $aclpathcondition}}
+   #use_backend {{.Value}} if { hdr(host) -i {{key $aclhostcondition}} } { path_beg -i {{key $aclpathcondition}} }{{end}}{{end}}
+   #{{range ls "service/haproxy/use-backend"}}{{$aclname := printf .Key}}{{$aclhostcondition := print "service/haproxy/acl/" $aclname "/host"}}{{$aclpathcondition := print "service/haproxy/acl/" $aclname "/path"}}{{if not (keyExists $aclpathcondition)}}
+   #use_backend {{.Value}} if { hdr(host) -i {{key $aclhostcondition}} }{{end}}{{end}}
+
+   ## Backend rules ## <<<--- NEW - NEEDS TESTING !!!
+   {{range ls "service/haproxy/use-backend"}}{{$aclname := printf .Key}}{{$aclhostcondition := print "service/haproxy/acl/" $aclname "/host"}}{{$aclpathcondition := print "service/haproxy/acl/" $aclname "/path"}}{{if and (keyExists $aclhostcondition) (keyExists $aclpathcondition)}}
    use_backend {{.Value}} if { hdr(host) -i {{key $aclhostcondition}} } { path_beg -i {{key $aclpathcondition}} }{{end}}{{end}}
-   {{range ls "service/haproxy/use-backend"}}{{$aclname := printf .Key}}{{$aclhostcondition := print "service/haproxy/acl/" $aclname "/host"}}{{$aclpathcondition := print "service/haproxy/acl/" $aclname "/path"}}{{if not (keyExists $aclpathcondition)}}
+   {{range ls "service/haproxy/use-backend"}}{{$aclname := printf .Key}}{{$aclhostcondition := print "service/haproxy/acl/" $aclname "/host"}}{{$aclpathcondition := print "service/haproxy/acl/" $aclname "/path"}}{{ if and (not (keyExists $aclhostcondition)) (keyExists $aclpathcondition) }}
+   use_backend {{.Value}} if { path_beg -i {{key $aclpathcondition}} }{{end}}{{end}}
+   {{range ls "service/haproxy/use-backend"}}{{$aclname := printf .Key}}{{$aclhostcondition := print "service/haproxy/acl/" $aclname "/host"}}{{$aclpathcondition := print "service/haproxy/acl/" $aclname "/path"}}{{ if and (keyExists $aclhostcondition) (not (keyExists $aclpathcondition)) }}
    use_backend {{.Value}} if { hdr(host) -i {{key $aclhostcondition}} }{{end}}{{end}}
+
 
    ## default backend rule
    
@@ -142,11 +160,10 @@ backend certbot
    server localhost 127.0.0.1:8080
 
 
-## Service Backends
-###################
-
-# Non-SSL backends
-{{range ls "service/haproxy/backends/no-ssl"}}# {{.Key}} backend
+## Non-SSL Service Backends
+###########################
+{{range ls "service/haproxy/backends/no-ssl"}}
+# {{.Key}} backend
 backend {{.Key}}
    redirect scheme https code 301 if !{ ssl_fc }
    http-request set-header X-SSL %[ssl_fc]
@@ -154,8 +171,10 @@ backend {{.Key}}
    server-template {{.Key}} 1 _{{.Key}}._tcp.service.consul resolvers consul resolve-prefer ipv4 init-addr none check
 {{ end }}
 
-# SSL backends
-{{range ls "service/haproxy/backends/ssl"}}# {{.Key}} backend
+## SSL Service Backends
+#######################
+{{range ls "service/haproxy/backends/ssl"}}
+# {{.Key}} backend
 backend {{.Key}}
    redirect scheme https code 301 if !{ ssl_fc }
    http-request set-header X-SSL %[ssl_fc]

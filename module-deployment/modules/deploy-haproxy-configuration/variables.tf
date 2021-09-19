@@ -1,18 +1,26 @@
 # Input variable definitions
 
-variable "haproxy_host_only_acls" {
-  description = "Map of host-only ACLs for haproxy configuration."
+variable "haproxy_host_path_acls" {
+  description = "Map of host/path ACLs for haproxy configuration."
+  type = map(object({
+    host = string
+    path = string
+  }))
+  default = {}
+}
+
+variable "haproxy_path_only_acls" {
+  description = "Map of path-only ACLs for haproxy configuration."
   type = map(object({
     host = string
   }))
   default = {}
 }
 
-variable "haproxy_host_path_acls" {
-  description = "Map of host/path ACLs for haproxy configuration."
+variable "haproxy_host_only_acls" {
+  description = "Map of host-only ACLs for haproxy configuration."
   type = map(object({
     host = string
-    path = string
   }))
   default = {}
 }

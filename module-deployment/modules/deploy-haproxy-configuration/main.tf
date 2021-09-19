@@ -8,18 +8,6 @@ terraform {
   }
 }
 
-resource "consul_keys" "host_only_acls" {
-
-  for_each = var.haproxy_host_only_acls
-
-  # The folder for KVs is the ACL name, the host for the ACL is set as value for the key 'host'
-  key {
-    path   = join("", [ "service/haproxy/acl/", each.key, "/host" ])
-    value  = each.value["host"]
-    delete = true
-  }
-}
-
 resource "consul_keys" "host_path_acls" {
 
   for_each = var.haproxy_host_path_acls
@@ -35,6 +23,30 @@ resource "consul_keys" "host_path_acls" {
   key {
     path   = join("", [ "service/haproxy/acl/", each.key, "/path" ])
     value  = each.value["path"]
+    delete = true
+  }
+}
+
+resource "consul_keys" "path_only_acls" {
+
+  for_each = var.haproxy_path_only_acls
+
+  # The folder for KVs is the ACL name, the path for the ACL is set as value for the key 'path'
+  key {
+    path   = join("", [ "service/haproxy/acl/", each.key, "/path" ])
+    value  = each.value["path"]
+    delete = true
+  }
+}
+
+resource "consul_keys" "host_only_acls" {
+
+  for_each = var.haproxy_host_only_acls
+
+  # The folder for KVs is the ACL name, the host for the ACL is set as value for the key 'host'
+  key {
+    path   = join("", [ "service/haproxy/acl/", each.key, "/host" ])
+    value  = each.value["host"]
     delete = true
   }
 }
