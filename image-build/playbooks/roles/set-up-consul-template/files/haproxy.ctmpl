@@ -111,13 +111,7 @@ frontend http_443
    http-request set-header X-Forwarded-For %[src]
    http-response set-header Strict-Transport-Security "max-age=16000000; includeSubDomains;"
 
-   ## Deny http traffic with 403 forbidden <<<--- OLD
-   #{{range ls "service/haproxy/deny"}}{{$aclname := printf .Key}}{{$aclhostcondition := print "service/haproxy/acl/" $aclname "/host"}}{{$aclpathcondition := print "service/haproxy/acl/" $aclname "/path"}}{{if keyExists $aclpathcondition}}
-   #http-request deny deny_status 403 if { hdr(host) -i {{key $aclhostcondition}} } { path_beg,url_dec -i {{key $aclpathcondition}} }{{end}}{{end}}
-   #{{range ls "service/haproxy/deny"}}{{$aclname := printf .Key}}{{$aclhostcondition := print "service/haproxy/acl/" $aclname "/host"}}{{$aclpathcondition := print "service/haproxy/acl/" $aclname "/path"}}{{if not (keyExists $aclpathcondition)}}
-   #http-request deny deny_status 403 if { hdr(host) -i {{key $aclhostcondition}} }{{end}}{{end}}
-
-   ## Deny http traffic with 403 forbidden <<<--- NEW - NEEDS TESTING !!!
+   ## Deny http traffic with 403 forbidden
    {{range ls "service/haproxy/deny"}}{{$aclname := printf .Key}}{{$aclhostcondition := print "service/haproxy/acl/" $aclname "/host"}}{{$aclpathcondition := print "service/haproxy/acl/" $aclname "/path"}}{{if and (keyExists $aclhostcondition) (keyExists $aclpathcondition)}}
    http-request deny deny_status 403 if { hdr(host) -i {{key $aclhostcondition}} } { path_beg,url_dec -i {{key $aclpathcondition}} }{{end}}{{end}}
    {{range ls "service/haproxy/deny"}}{{$aclname := printf .Key}}{{$aclhostcondition := print "service/haproxy/acl/" $aclname "/host"}}{{$aclpathcondition := print "service/haproxy/acl/" $aclname "/path"}}{{ if and (not (keyExists $aclhostcondition)) (keyExists $aclpathcondition) }}
@@ -125,13 +119,7 @@ frontend http_443
    {{range ls "service/haproxy/deny"}}{{$aclname := printf .Key}}{{$aclhostcondition := print "service/haproxy/acl/" $aclname "/host"}}{{$aclpathcondition := print "service/haproxy/acl/" $aclname "/path"}}{{ if and (keyExists $aclhostcondition) (not (keyExists $aclpathcondition)) }}
    http-request deny deny_status 403 if { hdr(host) -i {{key $aclhostcondition}} }{{end}}{{end}}
 
-   ## Backend rules ## <<<--- OLD
-   #{{range ls "service/haproxy/use-backend"}}{{$aclname := printf .Key}}{{$aclhostcondition := print "service/haproxy/acl/" $aclname "/host"}}{{$aclpathcondition := print "service/haproxy/acl/" $aclname "/path"}}{{if keyExists $aclpathcondition}}
-   #use_backend {{.Value}} if { hdr(host) -i {{key $aclhostcondition}} } { path_beg -i {{key $aclpathcondition}} }{{end}}{{end}}
-   #{{range ls "service/haproxy/use-backend"}}{{$aclname := printf .Key}}{{$aclhostcondition := print "service/haproxy/acl/" $aclname "/host"}}{{$aclpathcondition := print "service/haproxy/acl/" $aclname "/path"}}{{if not (keyExists $aclpathcondition)}}
-   #use_backend {{.Value}} if { hdr(host) -i {{key $aclhostcondition}} }{{end}}{{end}}
-
-   ## Backend rules ## <<<--- NEW - NEEDS TESTING !!!
+   ## Backend rules
    {{range ls "service/haproxy/use-backend"}}{{$aclname := printf .Key}}{{$aclhostcondition := print "service/haproxy/acl/" $aclname "/host"}}{{$aclpathcondition := print "service/haproxy/acl/" $aclname "/path"}}{{if and (keyExists $aclhostcondition) (keyExists $aclpathcondition)}}
    use_backend {{.Value}} if { hdr(host) -i {{key $aclhostcondition}} } { path_beg -i {{key $aclpathcondition}} }{{end}}{{end}}
    {{range ls "service/haproxy/use-backend"}}{{$aclname := printf .Key}}{{$aclhostcondition := print "service/haproxy/acl/" $aclname "/host"}}{{$aclpathcondition := print "service/haproxy/acl/" $aclname "/path"}}{{ if and (not (keyExists $aclhostcondition)) (keyExists $aclpathcondition) }}
@@ -139,9 +127,7 @@ frontend http_443
    {{range ls "service/haproxy/use-backend"}}{{$aclname := printf .Key}}{{$aclhostcondition := print "service/haproxy/acl/" $aclname "/host"}}{{$aclpathcondition := print "service/haproxy/acl/" $aclname "/path"}}{{ if and (keyExists $aclhostcondition) (not (keyExists $aclpathcondition)) }}
    use_backend {{.Value}} if { hdr(host) -i {{key $aclhostcondition}} }{{end}}{{end}}
 
-
    ## default backend rule
-   
    default_backend default
 
 
