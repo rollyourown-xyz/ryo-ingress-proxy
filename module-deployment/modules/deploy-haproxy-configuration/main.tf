@@ -8,6 +8,18 @@ terraform {
   }
 }
 
+resource "consul_keys" "tcp_listeners" {
+
+  for_each = var.haproxy_tcp_listeners
+
+  # ACL for deny rule is set as key, no value is set
+  key {
+    path   = join("", [ "service/haproxy/tcp-listeners/", each.key ])
+    value  = each.value["service"]
+    delete = true
+  }
+}
+
 resource "consul_keys" "host_path_acls" {
 
   for_each = var.haproxy_host_path_acls
@@ -47,18 +59,6 @@ resource "consul_keys" "host_only_acls" {
   key {
     path   = join("", [ "service/haproxy/acl/", each.key, "/host" ])
     value  = each.value["host"]
-    delete = true
-  }
-}
-
-resource "consul_keys" "tcp_listeners" {
-
-  for_each = var.haproxy_tcp_listeners
-
-  # ACL for deny rule is set as key, no value is set
-  key {
-    path   = join("", [ "service/haproxy/tcp-listeners/", each.key ])
-    value  = each.value["backend_service"]
     delete = true
   }
 }
