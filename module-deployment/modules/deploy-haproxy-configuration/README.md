@@ -2,6 +2,12 @@
 
 This module deploys key-value pairs to consul KV store for use by the haproxy service. ACLs, deny rules and use-backend rules are specified by input variables:
 
+## haproxy_tcp_listeners (map of objects)
+
+Map of TCP listener ports and services for haproxy TCP listener configuration. Each object must be a map. The object key is the TCP port for the listener and the object 'service' value is the name of the backend service to use. The form of the map is:
+
+        number = {service = string}
+
 ## haproxy_host_path_acls (map of objects)
 
 Map of host/path ACLs for haproxy configuration. Each object must be a map. The object key is the ACL name, the object 'host' value is the ACL host and the object 'path' value is the ACL path. The form for a map is:
