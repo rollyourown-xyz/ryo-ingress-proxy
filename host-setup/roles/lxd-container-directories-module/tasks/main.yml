@@ -16,17 +16,17 @@
 
 ### Consul directories
 
-- name: Create a directory to mount in consul containers
-  file:
-    path: "/var/containers/{{ module_id }}/consul"
-    state: directory
-    mode: '0755'
+# - name: Create a directory to mount in consul containers
+#   file:
+#     path: "/var/containers/{{ module_id }}/consul"
+#     state: directory
+#     mode: '0755'
 
-- name: Create a directory for consul data
-  file:
-    path: "/var/containers/{{ module_id }}/consul/data"
-    state: directory
-    mode: '0755'
+# - name: Create a directory for consul data
+#   file:
+#     path: "/var/containers/{{ module_id }}/consul/data"
+#     state: directory
+#     mode: '0755'
 
 ### Cetbot directory
 

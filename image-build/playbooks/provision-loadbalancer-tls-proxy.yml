@@ -5,6 +5,8 @@
   vars_files:
     # Module configuration file
     - "{{ playbook_dir }}/../../configuration/configuration.yml"
+    # Host configuration
+    - "{{ playbook_dir }}/../../../ryo-host/configuration/configuration_{{ host_id }}.yml"
 
   roles:
     - role: upgrade-container

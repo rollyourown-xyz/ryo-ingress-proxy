@@ -7,5 +7,5 @@
 
 # Do not change this unless you know what you are doing 
 module_id: ryo-service-proxy
-consul_ip_addr_host_part: 10
+#consul_ip_addr_host_part: 10
 haproxy_ip_addr_host_part: 11
