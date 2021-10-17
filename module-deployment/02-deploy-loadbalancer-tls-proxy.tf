@@ -3,8 +3,6 @@
 
 resource "lxd_container" "haproxy" {
 
-  #depends_on = [ lxd_container.consul ]
-
   remote     = var.host_id
   name       = "haproxy"
   image      = join("-", [ local.module_id, "haproxy", var.image_version ])

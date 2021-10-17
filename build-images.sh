@@ -27,7 +27,7 @@ errorMessage()
 
 # Default webhook and consul-template versions
 webhook_version='2.8.0'
-consul_template_version='0.27.0'
+consul_template_version='0.27.1'
 
 while getopts n:w:c:v:h flag
 do
@@ -49,11 +49,6 @@ fi
 
 echo "Building images for ryo-service-proxy module on "$hostname""
 echo ""
-#echo "Building Consul image"
-#echo "Executing command: packer build -var \"host_id="$hostname"\" -var \"version="$version"\" "$SCRIPT_DIR"/image-build/consul.pkr.hcl"
-#echo ""
-#packer build -var "host_id="$hostname"" -var "version="$version"" "$SCRIPT_DIR"/image-build/consul.pkr.hcl
-#echo ""
 echo "Building Loadbalancer-TLS-Proxy image"
 echo "Executing command: packer build -var \"host_id="$hostname"\" -var \"version="$version"\" -var \"webhook_version="$webhook_version"\" -var \"consul_template_version="$consul_template_version"\" "$SCRIPT_DIR"/image-build/loadbalancer-tls-proxy.pkr.hcl"
 echo ""
