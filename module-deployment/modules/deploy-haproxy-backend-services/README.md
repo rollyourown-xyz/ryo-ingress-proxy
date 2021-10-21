@@ -10,7 +10,7 @@ List of backend services for haproxy configuration where SSL connection is used 
            redirect scheme https code 301 if !{ ssl_fc }
            http-request set-header X-SSL %[ssl_fc]
            balance roundrobin
-           server-template <backend_service> 1 _<backend_service>._tcp.service.consul resolvers consul resolve-prefer ipv4 init-addr none ssl verify none check
+           server-template <backend_service> 1 _<backend_service>._tcp.service.ryo resolvers consul resolve-prefer ipv4 init-addr none ssl verify none check
 
 ## non_ssl_backend_services (list of strings)
 
@@ -20,4 +20,4 @@ List of backend services for haproxy configuration where no SSL connection is us
            redirect scheme https code 301 if !{ ssl_fc }
            http-request set-header X-SSL %[ssl_fc]
            balance roundrobin
-           server-template <backend_service> 1 _<backend_service>._tcp.service.consul resolvers consul resolve-prefer ipv4 init-addr none check
+           server-template <backend_service> 1 _<backend_service>._tcp.service.ryo resolvers consul resolve-prefer ipv4 init-addr none check
