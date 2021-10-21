@@ -135,7 +135,7 @@ frontend http_443
 ##################
 
 backend default
-   redirect scheme https code 301 if !{ ssl_fc }
+   redirect scheme https if !{ ssl_fc }
    http-request deny deny_status 404
 
 
@@ -151,7 +151,7 @@ backend certbot
 {{range ls "service/haproxy/backends/no-ssl"}}
 # {{.Key}} backend
 backend {{.Key}}
-   redirect scheme https code 301 if !{ ssl_fc }
+   redirect scheme https if !{ ssl_fc }
    http-request set-header X-SSL %[ssl_fc]
    balance roundrobin
    server-template {{.Key}} 1 _{{.Key}}._tcp.service.ryo resolvers consul resolve-prefer ipv4 init-addr none check
@@ -162,7 +162,7 @@ backend {{.Key}}
 {{range ls "service/haproxy/backends/ssl"}}
 # {{.Key}} backend
 backend {{.Key}}
-   redirect scheme https code 301 if !{ ssl_fc }
+   redirect scheme https if !{ ssl_fc }
    http-request set-header X-SSL %[ssl_fc]
    balance roundrobin
    server-template {{.Key}} 1 _{{.Key}}._tcp.service.ryo resolvers consul resolve-prefer ipv4 init-addr none ssl verify none check
