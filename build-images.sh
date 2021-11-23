@@ -27,7 +27,7 @@ errorMessage()
 
 # Default webhook and consul-template versions
 webhook_version='2.8.0'
-consul_template_version='0.27.1'
+consul_template_version='0.27.2'
 
 while getopts n:w:c:v:h flag
 do
