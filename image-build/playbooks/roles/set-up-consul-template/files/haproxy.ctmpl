@@ -96,6 +96,9 @@ frontend http_80
    # Letsencrypt backend rules
    use_backend certbot if letsencrypt-request
    
+   # Redirect to HTTPS
+   redirect scheme https code 301 if !{ ssl_fc }
+
    # default backend rule
    default_backend default
 
@@ -135,7 +138,6 @@ frontend http_443
 ##################
 
 backend default
-   redirect scheme https if !{ ssl_fc }
    http-request deny deny_status 404
 
 
