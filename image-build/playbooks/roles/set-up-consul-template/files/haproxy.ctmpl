@@ -93,12 +93,12 @@ frontend http_80
    # ACL Letsencrypt certificate renewal well-known path
    acl letsencrypt-request path_beg -i /.well-known/acme-challenge/
 
+   # Redirect to HTTPS
+   redirect scheme https code 301 if !{ ssl_fc } !letsencrypt-request
+
    # Letsencrypt backend rules
    use_backend certbot if letsencrypt-request
    
-   # Redirect to HTTPS
-   redirect scheme https code 301 if !{ ssl_fc }
-
    # default backend rule
    default_backend default
 
