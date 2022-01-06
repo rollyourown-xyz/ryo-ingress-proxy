@@ -47,7 +47,7 @@ then
 fi
 
 
-echo "Building images for ryo-service-proxy module on "$hostname""
+echo "Building images for ryo-ingress-proxy module on "$hostname""
 echo ""
 echo "Building Loadbalancer-TLS-Proxy image"
 echo "Executing command: packer build -var \"host_id="$hostname"\" -var \"version="$version"\" -var \"webhook_version="$webhook_version"\" -var \"consul_template_version="$consul_template_version"\" "$SCRIPT_DIR"/image-build/loadbalancer-tls-proxy.pkr.hcl"

@@ -39,10 +39,10 @@ fi
 # Module-specific host setup for ryo-loadbalancer-tls-proxy
 if [ -f ""$SCRIPT_DIR"/configuration/"$hostname"_playbooks_executed" ]
 then
-   echo "Host setup for ryo-service-proxy module has already been done on "$hostname""
+   echo "Host setup for ryo-ingress-proxy module has already been done on "$hostname""
    echo ""
 else
-   echo "Executing module-specific host setup playbooks for ryo-service-proxy on "$hostname""
+   echo "Executing module-specific host setup playbooks for ryo-ingress-proxy on "$hostname""
    echo ""
    ansible-playbook -i "$SCRIPT_DIR"/../ryo-host/configuration/inventory_"$hostname" "$SCRIPT_DIR"/host-setup/main.yml --extra-vars "host_id="$hostname""
    touch "$SCRIPT_DIR"/configuration/"$hostname"_playbooks_executed

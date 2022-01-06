@@ -24,7 +24,7 @@ errorMessage()
 }
 
 # Module ID
-module_id='ryo-service-proxy'
+module_id='ryo-ingress-proxy'
 
 while getopts n:v:h flag
 do

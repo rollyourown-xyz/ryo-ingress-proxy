@@ -6,5 +6,5 @@
 #---------------------------
 
 # Do not change this unless you know what you are doing 
-module_id: ryo-service-proxy
+module_id: ryo-ingress-proxy
 haproxy_ip_addr_host_part: 10
