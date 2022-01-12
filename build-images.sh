@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Default software versions
+webhook_version='2.8.0'
+consul_template_version='0.27.2'
+
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
 helpMessage()
@@ -25,10 +29,6 @@ errorMessage()
    exit 1
 }
 
-# Default webhook and consul-template versions
-webhook_version='2.8.0'
-consul_template_version='0.27.2'
-
 while getopts n:w:c:v:h flag
 do
     case "${flag}" in
@@ -47,9 +47,12 @@ then
 fi
 
 
-echo "Building images for ryo-ingress-proxy module on "$hostname""
+# Get Module ID from configuration file
+MODULE_ID="$(yq eval '.module_id' "$SCRIPT_DIR"/configuration/configuration.yml)"
+
+echo "Building images for "$MODULE_ID" module on "$hostname""
 echo ""
-echo "Building Loadbalancer-TLS-Proxy image"
+echo "Building HAProxy-Certbot image"
 echo "Executing command: packer build -var \"host_id="$hostname"\" -var \"version="$version"\" -var \"webhook_version="$webhook_version"\" -var \"consul_template_version="$consul_template_version"\" "$SCRIPT_DIR"/image-build/loadbalancer-tls-proxy.pkr.hcl"
 echo ""
 packer build -var "host_id="$hostname"" -var "version="$version"" -var "webhook_version="$webhook_version"" -var "consul_template_version="$consul_template_version"" "$SCRIPT_DIR"/image-build/loadbalancer-tls-proxy.pkr.hcl
