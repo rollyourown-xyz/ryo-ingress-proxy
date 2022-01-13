@@ -14,30 +14,39 @@
     state: directory
     mode: '0755'
 
-### Cetbot directory
+### Ingress Proxy directory
 
-- name: Create a directory to mount in certbot containers
+- name: Create a directory to mount in ingress-proxy container
   file:
-    path: "/var/containers/{{ module_id }}/certbot"
+    path: "/var/containers/{{ module_id }}/ingress-proxy"
     state: directory
     mode: '0755'
 
-### TLS certificates directories
+### Ingress Proxy - Certbot data directories
+
+- name: Create a directory to mount for certbot data
+  file:
+    path: "/var/containers/{{ module_id }}/ingress-proxy/certbot"
+    state: directory
+    mode: '0755'
+
+
+### Ingress Proxy - TLS certificates directories
 
 - name: Create a directory to mount in containers needing TLS certificates
   file:
-    path: "/var/containers/{{ module_id }}/tls"
+    path: "/var/containers/{{ module_id }}/ingress-proxy/tls"
     state: directory
     mode: '0755'
 
 - name: Create a directory to mount in containers needing concatenated TLS certificates
   file:
-    path: "/var/containers/{{ module_id }}/tls/concatenated"
+    path: "/var/containers/{{ module_id }}/ingress-proxy/tls/concatenated"
     state: directory
     mode: '0755'
 
 - name: Create a directory to mount in containers needing non-concatenated TLS certificates
   file:
-    path: "/var/containers/{{ module_id }}/tls/non-concatenated"
+    path: "/var/containers/{{ module_id }}/ingress-proxy/tls/non-concatenated"
     state: directory
     mode: '0755'
