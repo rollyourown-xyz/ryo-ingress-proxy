@@ -1,5 +1,5 @@
 service {
-  name = "haproxy"
+  name = "ingress-proxy"
   tags = [ "loadbalancer", "tls_proxy" ]
   port = 6080
 }

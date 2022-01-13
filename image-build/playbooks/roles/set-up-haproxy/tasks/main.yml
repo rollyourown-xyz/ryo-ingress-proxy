@@ -42,13 +42,13 @@
     force: yes
 
 
-# Copy haproxy consul service configuration file
+# Copy ingress-proxy consul service configuration file
 #
-- name: haproxy consul service configuration file
+- name: ingress-proxy consul service configuration file
   copy:
     mode: 0640
     owner: consul
     group: consul
-    dest: /etc/consul.d/haproxy-service.hcl
-    src: haproxy-service.hcl
+    dest: /etc/consul.d/ingress-proxy-service.hcl
+    src: ingress-proxy-service.hcl
     force: yes

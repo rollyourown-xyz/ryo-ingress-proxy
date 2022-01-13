@@ -37,7 +37,7 @@ variable "consul_template_version" {
 
 # Name for the container for which the image is to be built
 locals {
-  service_name = "haproxy"
+  service_name = "ingress-proxy"
 }
 
 # Variables from configuration files
@@ -56,7 +56,7 @@ locals {
   build_container_name = "packer-lxd-build"
 
   build_inventory_file = "${abspath(path.root)}/playbooks/inventory.yml"
-  build_playbook_file  = "${abspath(path.root)}/playbooks/provision-loadbalancer-tls-proxy.yml"
+  build_playbook_file  = "${abspath(path.root)}/playbooks/provision-ingress-proxy.yml"
   build_extra_vars     = "host_id=${var.host_id} module_id=${local.module_id} webhook_version=${var.webhook_version} consul_template_version=${var.consul_template_version}"
 }
 

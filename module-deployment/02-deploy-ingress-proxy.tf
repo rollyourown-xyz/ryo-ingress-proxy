@@ -1,11 +1,11 @@
-# Deploy HAProxy/Certbot Loadbalancer / TLS proxy for rollyourown.xyz modules and projects
-##########################################################################################
+# Deploy Ingress Proxy for rollyourown.xyz modules and projects
+###############################################################
 
-resource "lxd_container" "haproxy" {
+resource "lxd_container" "ingress-proxy" {
 
   remote     = var.host_id
-  name       = "haproxy"
-  image      = join("-", [ local.module_id, "haproxy", var.image_version ])
+  name       = "ingress-proxy"
+  image      = join("-", [ local.module_id, "ingress-proxy", var.image_version ])
   profiles   = ["default"]
   
   config = { 
@@ -21,7 +21,7 @@ resource "lxd_container" "haproxy" {
     properties = {
       name           = "eth0"
       network        = var.host_id
-      "ipv4.address" = join(".", [ local.lxd_host_network_part, local.haproxy_ip_addr_host_part ])
+      "ipv4.address" = join(".", [ local.lxd_host_network_part, local.ingress-proxy_ip_addr_host_part ])
     }
   }
   
@@ -34,7 +34,7 @@ resource "lxd_container" "haproxy" {
 
     properties = {
       listen  = join("", [ "tcp:", local.lxd_host_control_ipv4_address, ":80" ] )
-      connect = join("", [ "tcp:", local.lxd_host_network_part, ".", local.haproxy_ip_addr_host_part, ":80" ] )
+      connect = join("", [ "tcp:", local.lxd_host_network_part, ".", local.ingress-proxy_ip_addr_host_part, ":80" ] )
       nat     = "yes"
     }
   }
@@ -46,7 +46,7 @@ resource "lxd_container" "haproxy" {
 
     properties = {
       listen  = join("", [ "tcp:", local.lxd_host_control_ipv4_address, ":443" ] )
-      connect = join("", [ "tcp:", local.lxd_host_network_part, ".", local.haproxy_ip_addr_host_part, ":443" ] )
+      connect = join("", [ "tcp:", local.lxd_host_network_part, ".", local.ingress-proxy_ip_addr_host_part, ":443" ] )
       nat     = "yes"
     }
   }
@@ -59,7 +59,7 @@ resource "lxd_container" "haproxy" {
     type = "disk"
     
     properties = {
-      source   = join("", ["/var/containers/", local.module_id, "/certbot"])
+      source   = join("", ["/var/containers/", local.module_id, "/ingress-proxy/certbot"])
       path     = "/etc/letsencrypt"
       readonly = "false"
       shift    = "true"
@@ -68,11 +68,11 @@ resource "lxd_container" "haproxy" {
 
   ### Directory for concatenated letsencrypt certificates (used by HAProxy)
   device {
-    name = "haproxy-ssl"
+    name = "concat-certs"
     type = "disk"
     
     properties = {
-      source   = join("", ["/var/containers/", local.module_id, "/tls/concatenated"])
+      source   = join("", ["/var/containers/", local.module_id, "/ingress-proxy/tls/concatenated"])
       path     = "/etc/haproxy/ssl"
       readonly = "false"
       shift    = "true"
@@ -85,7 +85,7 @@ resource "lxd_container" "haproxy" {
     type = "disk"
     
     properties = {
-      source   = join("", ["/var/containers/", local.module_id, "/tls/non-concatenated"])
+      source   = join("", ["/var/containers/", local.module_id, "/ingress-proxy/tls/non-concatenated"])
       path     = "/var/certs"
       readonly = "false"
       shift    = "true"

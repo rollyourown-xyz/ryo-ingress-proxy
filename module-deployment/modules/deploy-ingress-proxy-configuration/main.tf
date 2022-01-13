@@ -10,7 +10,7 @@ terraform {
 
 resource "consul_keys" "tcp_listeners" {
 
-  for_each = var.haproxy_tcp_listeners
+  for_each = var.ingress-proxy_tcp_listeners
 
   # ACL for deny rule is set as key, no value is set
   key {
@@ -22,7 +22,7 @@ resource "consul_keys" "tcp_listeners" {
 
 resource "consul_keys" "host_path_acls" {
 
-  for_each = var.haproxy_host_path_acls
+  for_each = var.ingress-proxy_host_path_acls
 
   # The folder for KVs is the ACL name, the host for the ACL is set as value for the key 'host'
   key {
@@ -41,7 +41,7 @@ resource "consul_keys" "host_path_acls" {
 
 resource "consul_keys" "path_only_acls" {
 
-  for_each = var.haproxy_path_only_acls
+  for_each = var.ingress-proxy_path_only_acls
 
   # The folder for KVs is the ACL name, the path for the ACL is set as value for the key 'path'
   key {
@@ -53,7 +53,7 @@ resource "consul_keys" "path_only_acls" {
 
 resource "consul_keys" "host_only_acls" {
 
-  for_each = var.haproxy_host_only_acls
+  for_each = var.ingress-proxy_host_only_acls
 
   # The folder for KVs is the ACL name, the host for the ACL is set as value for the key 'host'
   key {
@@ -65,7 +65,7 @@ resource "consul_keys" "host_only_acls" {
 
 resource "consul_keys" "acl_denys" {
 
-  for_each = toset(var.haproxy_acl_denys)
+  for_each = toset(var.ingress-proxy_acl_denys)
 
   # ACL for deny rule is set as key, no value is set
   key {
@@ -77,7 +77,7 @@ resource "consul_keys" "acl_denys" {
 
 resource "consul_keys" "acl_use-backends" {
 
-  for_each = var.haproxy_acl_use-backends
+  for_each = var.ingress-proxy_acl_use-backends
 
   # ACL is set as key, backend service is set as value
   key {

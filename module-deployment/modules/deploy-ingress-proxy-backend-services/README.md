@@ -1,6 +1,6 @@
-# Deploy key-value pairs to consul KV store for providing haproxy with configuration for backends
+# Deploy key-value pairs to consul KV store for providing ingress-proxy with configuration for backends
 
-This module deploys key-value pairs to consul KV store for use by the haproxy service. Backends are specified by input variables:
+This module deploys key-value pairs to consul KV store for use by the ingress-proxy service. Backends are specified by input variables:
 
 ## ssl_backend_services (list of strings)
 
