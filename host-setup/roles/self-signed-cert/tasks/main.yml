@@ -4,7 +4,7 @@
     mode: 0640
     owner: root
     group: root
-    dest: /var/containers/{{ module_id }}/tls/concatenated/ryo.pem
+    dest: /var/containers/{{ module_id }}/ingress-proxy/tls/concatenated/ryo.pem
     src: ryo.pem
     force: yes
 
@@ -13,7 +13,7 @@
     mode: 0640
     owner: root
     group: root
-    dest: /var/containers/{{ module_id }}/tls/non-concatenated/ryo.cert.pem
+    dest: /var/containers/{{ module_id }}/ingress-proxy/tls/non-concatenated/ryo.cert.pem
     src: ryo.cert
     force: yes
 
@@ -22,6 +22,6 @@
     mode: 0640
     owner: root
     group: root
-    dest: /var/containers/{{ module_id }}/tls/non-concatenated/ryo.key.pem
+    dest: /var/containers/{{ module_id }}/ingress-proxy/tls/non-concatenated/ryo.key.pem
     src: ryo.key
     force: yes
