@@ -21,7 +21,7 @@ resource "lxd_container" "ingress-proxy" {
     properties = {
       name           = "eth0"
       network        = var.host_id
-      "ipv4.address" = join(".", [ local.lxd_host_network_part, local.ingress-proxy_ip_addr_host_part ])
+      "ipv4.address" = join(".", [ local.lxd_host_network_part, local.ingress_proxy_ip_addr_host_part ])
     }
   }
   
@@ -34,7 +34,7 @@ resource "lxd_container" "ingress-proxy" {
 
     properties = {
       listen  = join("", [ "tcp:", local.lxd_host_control_ipv4_address, ":80" ] )
-      connect = join("", [ "tcp:", local.lxd_host_network_part, ".", local.ingress-proxy_ip_addr_host_part, ":80" ] )
+      connect = join("", [ "tcp:", local.lxd_host_network_part, ".", local.ingress_proxy_ip_addr_host_part, ":80" ] )
       nat     = "yes"
     }
   }
@@ -46,7 +46,7 @@ resource "lxd_container" "ingress-proxy" {
 
     properties = {
       listen  = join("", [ "tcp:", local.lxd_host_control_ipv4_address, ":443" ] )
-      connect = join("", [ "tcp:", local.lxd_host_network_part, ".", local.ingress-proxy_ip_addr_host_part, ":443" ] )
+      connect = join("", [ "tcp:", local.lxd_host_network_part, ".", local.ingress_proxy_ip_addr_host_part, ":443" ] )
       nat     = "yes"
     }
   }

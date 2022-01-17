@@ -23,7 +23,7 @@ locals {
 # Basic module variables
 locals {
   module_id                 = yamldecode(file(local.module_configuration))["module_id"]
-  ingress-proxy_ip_addr_host_part = yamldecode(file(local.module_configuration))["ingress-proxy_ip_addr_host_part"]
+  ingress_proxy_ip_addr_host_part = yamldecode(file(local.module_configuration))["ingress_proxy_ip_addr_host_part"]
 }
 
 # LXD variables
