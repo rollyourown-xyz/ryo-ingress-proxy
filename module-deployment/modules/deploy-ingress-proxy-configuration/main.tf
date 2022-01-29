@@ -8,6 +8,9 @@ terraform {
   }
 }
 
+## NOTE: TCP Listeners cannot currently be used as, although the ingress-proxy configuration
+## is dynamically updated by consul-template, the ingress-proxy container itself does not have
+## dynamically configured proxy devices.
 resource "consul_keys" "tcp_listeners" {
 
   for_each = var.ingress-proxy_tcp_listeners
