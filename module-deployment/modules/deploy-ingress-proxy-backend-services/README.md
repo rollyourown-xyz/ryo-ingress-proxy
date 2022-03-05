@@ -1,3 +1,8 @@
+<!--
+SPDX-FileCopyrightText: 2022 Wilfred Nicoll <xyzroller@rollyourown.xyz>
+SPDX-License-Identifier: CC-BY-SA-4.0
+-->
+
 # Deploy key-value pairs to consul KV store for providing ingress-proxy with configuration for backends
 
 This module deploys key-value pairs to consul KV store for use by the ingress-proxy service. Backends are specified by input variables:

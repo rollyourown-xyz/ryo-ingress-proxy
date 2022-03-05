@@ -1,3 +1,8 @@
+<!--
+SPDX-FileCopyrightText: 2022 Wilfred Nicoll <xyzroller@rollyourown.xyz>
+SPDX-License-Identifier: CC-BY-SA-4.0
+-->
+
 # Deploy key-value pairs to consul KV store for providing certbot with configuration for letsencrypt certificate management
 
 This module deploys key-value pairs to consul KV store for use by the certbot service. Certificates to be managed are specified by input variable:
