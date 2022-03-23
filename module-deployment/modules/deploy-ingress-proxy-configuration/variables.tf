@@ -42,6 +42,14 @@ variable "ingress-proxy_acl_denys" {
   default = []
 }
 
+variable "ingress-proxy_acl_redirects" {
+  description = "Map of ACLs to use for http-request redirect in haproxy configuration."
+  type = map(object({
+    prefix = string
+  }))
+  default = {}
+}
+
 variable "ingress-proxy_acl_use-backends" {
   description = "Map of ACLs to use for use-backend ingress-proxy configuration."
   type = map(object({

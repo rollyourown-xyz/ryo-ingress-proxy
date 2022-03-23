@@ -43,6 +43,20 @@ If the ACL is a host/path ACL, then the resulting haproxy HTTPS frontend deny ru
 
         http-request deny deny_status 403 if { hdr(host) -i <host> } { path_beg -i <path> }
 
+## ingress-proxy_acl_redirects (map of objects)
+
+Map of ACLs to use for http-request redirect in haproxy configuration. Each object must be a map. The object key is the ACL name, the object 'prefix' value is the redirect prefix to use. The form for a map is:
+
+        acl_name = {prefix = string}
+
+If the ACL is a host-only ACL, then the resulting haproxy HTTPS frontend redirect rule is:
+
+        http-request redirect prefix <prefix> code 302 if { hdr(host) -i <host> }
+
+If the ACL is a host/path ACL, then the resulting haproxy HTTPS frontend use-backend rule is:
+
+        http-request redirect prefix <prefix> code 302 if { hdr(host) -i <host> } { path_beg -i <path> }
+
 ## ingress-proxy_acl_use-backends (map of objects)
 
 Map of ACLs to use for use-backend haproxy configuration. Each object must be a map. The object key is the ACL name, the object 'backend' value is the backend service to use. The form for a map is:

@@ -125,6 +125,14 @@ frontend http_443
    {{range ls "service/haproxy/deny"}}{{$aclname := printf .Key}}{{$aclhostcondition := print "service/haproxy/acl/" $aclname "/host"}}{{$aclpathcondition := print "service/haproxy/acl/" $aclname "/path"}}{{ if and (keyExists $aclhostcondition) (not (keyExists $aclpathcondition)) }}
    http-request deny deny_status 403 if { hdr(host) -i {{key $aclhostcondition}} }{{end}}{{end}}
 
+   ## Redirect http traffic with 302 Moved Temporarily
+   {{range ls "service/haproxy/redirect"}}{{$aclname := printf .Key}}{{$aclhostcondition := print "service/haproxy/acl/" $aclname "/host"}}{{$aclpathcondition := print "service/haproxy/acl/" $aclname "/path"}}{{if and (keyExists $aclhostcondition) (keyExists $aclpathcondition)}}
+   http-request redirect prefix {{.Value}} code 302 if { hdr(host) -i {{key $aclhostcondition}} } { path_beg -i {{key $aclpathcondition}} }{{end}}{{end}}
+   {{range ls "service/haproxy/redirect"}}{{$aclname := printf .Key}}{{$aclhostcondition := print "service/haproxy/acl/" $aclname "/host"}}{{$aclpathcondition := print "service/haproxy/acl/" $aclname "/path"}}{{ if and (not (keyExists $aclhostcondition)) (keyExists $aclpathcondition) }}
+   http-request redirect prefix {{.Value}} code 302 if { path_beg -i {{key $aclpathcondition}} }{{end}}{{end}}
+   {{range ls "service/haproxy/redirect"}}{{$aclname := printf .Key}}{{$aclhostcondition := print "service/haproxy/acl/" $aclname "/host"}}{{$aclpathcondition := print "service/haproxy/acl/" $aclname "/path"}}{{ if and (keyExists $aclhostcondition) (not (keyExists $aclpathcondition)) }}
+   http-request redirect prefix {{.Value}} code 302 if { hdr(host) -i {{key $aclhostcondition}} }{{end}}{{end}}
+
    ## Backend rules
    {{range ls "service/haproxy/use-backend"}}{{$aclname := printf .Key}}{{$aclhostcondition := print "service/haproxy/acl/" $aclname "/host"}}{{$aclpathcondition := print "service/haproxy/acl/" $aclname "/path"}}{{if and (keyExists $aclhostcondition) (keyExists $aclpathcondition)}}
    use_backend {{.Value}} if { hdr(host) -i {{key $aclhostcondition}} } { path_beg -i {{key $aclpathcondition}} }{{end}}{{end}}

@@ -81,6 +81,18 @@ resource "consul_keys" "acl_denys" {
   }
 }
 
+resource "consul_keys" "acl_redirects" {
+
+  for_each = var.ingress-proxy_acl_redirects
+
+  # ACL is set as key, redirect prefix is set as value
+  key {
+    path   = join("", [ "service/haproxy/redirect/", each.key ])
+    value  = each.value["prefix"]
+    delete = true
+  }
+}
+
 resource "consul_keys" "acl_use-backends" {
 
   for_each = var.ingress-proxy_acl_use-backends
