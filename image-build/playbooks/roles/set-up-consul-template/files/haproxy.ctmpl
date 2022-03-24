@@ -149,7 +149,7 @@ frontend http_443
 ##################
 
 backend default
-   http-request deny deny_status 404
+   http-request deny deny_status 403
 
 
 ## Letsencrypt Backend
