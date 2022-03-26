@@ -55,3 +55,15 @@
     dest: /etc/consul.d/ingress-proxy-service.hcl
     src: ingress-proxy-service.hcl
     force: yes
+
+
+# Copy haproxy log rotation and deletion configuration
+#
+- name: Copy haproxy log rotation and deletion configuration
+  template:
+    mode: 0644
+    owner: root
+    group: root
+    dest: /etc/logrotate.d/haproxy
+    src: logrotate_haproxy.j2
+    force: yes

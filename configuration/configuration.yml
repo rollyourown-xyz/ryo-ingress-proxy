@@ -11,3 +11,4 @@
 # Do not change this unless you know what you are doing 
 module_id: ryo-ingress-proxy
 ingress_proxy_ip_addr_host_part: 10
+haproxy_log_rotation: 14
