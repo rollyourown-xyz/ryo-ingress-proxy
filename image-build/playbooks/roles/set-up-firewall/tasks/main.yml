@@ -3,34 +3,61 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 
-# Copy iptables rules script (making executable)
+# Copy nftables configuration
 #
-- name: Copy firewall rules script
+- name: Copy nftables configuration
+  template:
+    mode: 0770
+    owner: root
+    group: root
+    dest: /etc/nftables.conf
+    src: nftables.conf.j2
+    force: yes
+  register: changes_made
+
+
+# Copy nftables reload script
+#
+- name: Copy nftables reload script
   copy:
     mode: 0770
     owner: root
     group: root
-    dest: /usr/local/bin/iptables-rules.sh
-    src: iptables-rules.sh
+    dest: /usr/local/bin/reload-nftables.sh
+    src: reload-nftables.sh
     force: yes
 
 
-# Copy firewall service definition
-#
-- name: Copy firewall service definition
-  copy:
-    mode: 0644
-    owner: root
-    group: root
-    dest: /lib/systemd/system/iptables-rules.service
-    src: iptables-rules.service
-    force: yes
 
 
-# Enable iptables rules service
-#
-- name: Enable firewall service
-  service:
-    name: iptables-rules.service
-    enabled: yes
-    state: started
+# # Copy iptables rules script (making executable)
+# #
+# - name: Copy firewall rules script
+#   copy:
+#     mode: 0770
+#     owner: root
+#     group: root
+#     dest: /usr/local/bin/iptables-rules.sh
+#     src: iptables-rules.sh
+#     force: yes
+
+
+# # Copy firewall service definition
+# #
+# - name: Copy firewall service definition
+#   copy:
+#     mode: 0644
+#     owner: root
+#     group: root
+#     dest: /lib/systemd/system/iptables-rules.service
+#     src: iptables-rules.service
+#     force: yes
+
+
+# # Enable iptables rules service
+# #
+# - name: Enable firewall service
+#   service:
+#     name: iptables-rules.service
+#     enabled: yes
+#     state: started
