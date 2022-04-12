@@ -37,13 +37,6 @@ template {
   command = "/usr/local/bin/reload-nftables.sh"
 }
 
-# Template for dynamic iptables configuration based on consul key-values
-#template {
-#  source = "/etc/consul-template/iptables-rules.ctmpl"
-#  destination = "/usr/local/bin/iptables-rules.sh"
-#  command = "/usr/local/bin/iptables-rules.sh"
-#}
-
 # Template for dynamic haproxy configuration based on consul key-values and service discovery
 template {
   source = "/etc/consul-template/haproxy.ctmpl"

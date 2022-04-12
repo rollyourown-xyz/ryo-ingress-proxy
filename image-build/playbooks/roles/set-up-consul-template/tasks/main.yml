@@ -69,18 +69,6 @@
     force: yes
 
 
-# Copy consul-template template file for dynamic iptables configuration based on consul key-values
-#
-# - name: Copy consul-template template file for dynamic iptables configuration
-#   copy:
-#     mode: 0644
-#     owner: root
-#     group: root
-#     dest: /etc/consul-template/iptables-rules.ctmpl
-#     src: iptables-rules.ctmpl
-#     force: yes
-
-
 # Copy consul-template template file for dynamic haproxy configuration based on consul key-values and service discovery
 #
 - name: Copy consul-template template file for dynamic haproxy configuration
