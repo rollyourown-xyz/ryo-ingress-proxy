@@ -13,7 +13,6 @@
     dest: /etc/nftables.conf
     src: nftables.conf
     force: yes
-  register: changes_made
 
 
 # Copy nftables reload script
