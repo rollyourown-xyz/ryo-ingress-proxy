@@ -167,7 +167,8 @@ backend {{.Key}}
    redirect scheme https if !{ ssl_fc }
    http-request set-header X-SSL %[ssl_fc]
    balance roundrobin
-   server-template {{.Key}} 1 _{{.Key}}._tcp.service.ryo resolvers consul resolve-prefer ipv4 init-addr none check
+   #server-template {{.Key}} 1 _{{.Key}}._tcp.service.ryo resolvers consul resolve-prefer ipv4 init-addr none check
+   server-template {{.Key}} 1 _{{.Key}}._tcp.service.ryo resolvers consul resolve-prefer ipv6 init-addr none check
 {{ end }}
 
 ## SSL Service Backends
@@ -178,5 +179,6 @@ backend {{.Key}}
    redirect scheme https if !{ ssl_fc }
    http-request set-header X-SSL %[ssl_fc]
    balance roundrobin
-   server-template {{.Key}} 1 _{{.Key}}._tcp.service.ryo resolvers consul resolve-prefer ipv4 init-addr none ssl verify none check
+   #server-template {{.Key}} 1 _{{.Key}}._tcp.service.ryo resolvers consul resolve-prefer ipv4 init-addr none ssl verify none check
+   server-template {{.Key}} 1 _{{.Key}}._tcp.service.ryo resolvers consul resolve-prefer ipv6 init-addr none ssl verify none check
 {{ end }}
