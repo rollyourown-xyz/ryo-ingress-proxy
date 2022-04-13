@@ -16,7 +16,7 @@ resource "lxd_container" "ingress-proxy" {
     "user.user-data" = file("cloud-init/cloud-init-basic.yml")
   }
   
-  ## Provide eth0 interface with static IP address
+  ## Provide eth0 interface with static IP addresses
   device {
     name = "eth0"
     type = "nic"
@@ -25,12 +25,17 @@ resource "lxd_container" "ingress-proxy" {
       name           = "eth0"
       network        = var.host_id
       "ipv4.address" = join(".", [ local.lxd_host_network_part, local.ingress_proxy_ip_addr_host_part ])
+      #
+      # THE FOLLOWING IS EXPERIMENTAL
+      "ipv6.address" = join("::", [ local.lxd_host_network_ipv6_prefix, local.ingress_proxy_ip_addr_host_part])
+      # END EXPERIMENTAL
+      #
     }
   }
   
   ## Add proxy devices for the module
 
-  ### HTTP Port 80
+  ### HTTP Port 80 (IPv4)
   device {
     name = "proxy0"
     type = "proxy"
@@ -42,7 +47,7 @@ resource "lxd_container" "ingress-proxy" {
     }
   }
 
-  ### HTTPS Port 443
+  ### HTTPS Port 443 (IPv4)
   device {
     name = "proxy1"
     type = "proxy"
@@ -53,6 +58,35 @@ resource "lxd_container" "ingress-proxy" {
       nat     = "yes"
     }
   }
+
+  #
+  # THE FOLLOWING IS EXPERIMENTAL
+  ### HTTP Port 80 (IPv6)
+  device {
+    name = "proxy2"
+    type = "proxy"
+
+    properties = {
+      listen  = join("", [ "tcp:", "[", local.lxd_host_public_ipv6_address, "]:80" ] )
+      connect = join("", [ "tcp:", "[", local.lxd_host_network_ipv6_prefix, "::", local.ingress_proxy_ip_addr_host_part, "]:80" ] )
+      nat     = "yes"
+    }
+  }
+
+  ### HTTPS Port 443 (IPv6)
+  device {
+    name = "proxy3"
+    type = "proxy"
+
+    properties = {
+      listen  = join("", [ "tcp:", "[", local.lxd_host_public_ipv6_address, "]:443" ] )
+      connect = join("", [ "tcp:", "[", local.lxd_host_network_ipv6_prefix, "::", local.ingress_proxy_ip_addr_host_part, "]:443" ] )
+      nat     = "yes"
+    }
+  }
+  # END EXPERIMENTAL
+  #
+
 
   ## Mount container directories for persistent storage for the module
 

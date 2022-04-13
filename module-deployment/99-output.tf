@@ -3,7 +3,16 @@
 
 # Output variable definitions
 
-output "ingress-proxy_ip_address" {
-    value       = lxd_container.ingress-proxy.ip_address
-    description = "IP Address of the ingress-proxy container"
+output "ingress-proxy_ipv4_address" {
+    value       = lxd_container.ingress-proxy.ipv4_address
+    description = "IPv4 Address of the ingress-proxy container"
 }
+
+#
+# THE FOLLOWING IS EXPERIMENTAL
+output "ingress-proxy_ipv6_address" {
+    value       = lxd_container.ingress-proxy.ipv6_address
+    description = "IPv6 Address of the ingress-proxy container"
+}
+# END EXPERIMENTAL
+#
