@@ -2,8 +2,14 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 consul {
-  address = "127.0.0.1:8500"
-  
+
+  #
+  # THE FOLLOWING IS EXPERIMENTAL
+  #address = "127.0.0.1:8500"
+  address = "[::1]:8500"
+  # END EXPERIMENTAL
+  #
+
   auth {
     enabled = false
   }
