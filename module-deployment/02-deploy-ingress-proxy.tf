@@ -27,7 +27,7 @@ resource "lxd_container" "ingress-proxy" {
       "ipv4.address" = join(".", [ local.lxd_host_network_part, local.ingress_proxy_ip_addr_host_part ])
       #
       # THE FOLLOWING IS EXPERIMENTAL
-      "ipv6.address" = join("::", [ local.lxd_host_network_ipv6_prefix, local.ingress_proxy_ip_addr_host_part])
+      "ipv6.address" = join("", [ local.lxd_host_public_ipv6_prefix, "::", local.lxd_host_network_ipv6_subnet, ":", local.ingress_proxy_ip_addr_host_part ])
       # END EXPERIMENTAL
       #
     }
@@ -68,7 +68,7 @@ resource "lxd_container" "ingress-proxy" {
 
     properties = {
       listen  = join("", [ "tcp:", "[", local.lxd_host_public_ipv6_address, "]:80" ] )
-      connect = join("", [ "tcp:", "[", local.lxd_host_network_ipv6_prefix, "::", local.ingress_proxy_ip_addr_host_part, "]:80" ] )
+      connect = join("", [ "tcp:", "[", local.lxd_host_public_ipv6_prefix, "::", local.lxd_host_network_ipv6_subnet, ":", local.ingress_proxy_ip_addr_host_part, "]:80" ] )
       nat     = "yes"
     }
   }
@@ -80,7 +80,7 @@ resource "lxd_container" "ingress-proxy" {
 
     properties = {
       listen  = join("", [ "tcp:", "[", local.lxd_host_public_ipv6_address, "]:443" ] )
-      connect = join("", [ "tcp:", "[", local.lxd_host_network_ipv6_prefix, "::", local.ingress_proxy_ip_addr_host_part, "]:443" ] )
+      connect = join("", [ "tcp:", "[", local.lxd_host_public_ipv6_prefix, "::", local.lxd_host_network_ipv6_subnet, ":", local.ingress_proxy_ip_addr_host_part, "]:443" ] )
       nat     = "yes"
     }
   }
