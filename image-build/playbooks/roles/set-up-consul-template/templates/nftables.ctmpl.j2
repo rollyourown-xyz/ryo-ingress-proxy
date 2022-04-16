@@ -22,7 +22,7 @@ table inet filter {
         iifname "lo" accept
 
         # Allow ICMPv6
-        icmpv6 type { destination-unreachable, packet-too-big, time-exceeded, parameter-problem, echo-request, echo-reply, nd-router-solicit, nd-router-advert, nd-neighbor-solicit, nd-neighbor-advert, ind-neighbor-solicit, ind-neighbor-advert} accept
+        icmpv6 type { destination-unreachable, packet-too-big, time-exceeded, parameter-problem, echo-request, echo-reply, nd-router-solicit, nd-router-advert, nd-neighbor-solicit, nd-neighbor-advert, ind-neighbor-solicit, ind-neighbor-advert } accept
 
         # Allow inbound ICMP echo-request
         icmp type echo-request accept
@@ -51,8 +51,8 @@ table inet filter {
         ip saddr {{ lxd_host_network_part }}.0/24 tcp dport 8301 accept
         #
         # THE FOLLOWING IS EXPERIMENTAL
-        ip6 saddr {{ host_public_ipv6_prefix }}::{{lxd_host_network_ipv6_subnet}}:0/112 udp dport 8301 accept
-        ip6 saddr {{ host_public_ipv6_prefix }}::{{lxd_host_network_ipv6_subnet}}:0/112 tcp dport 8301 accept
+        ip6 saddr {{ host_public_ipv6_prefix }}::{{ lxd_host_network_ipv6_subnet }}:0/112 udp dport 8301 accept
+        ip6 saddr {{ host_public_ipv6_prefix }}::{{ lxd_host_network_ipv6_subnet }}:0/112 tcp dport 8301 accept
         # END EXPERIMENTAL
         #
 
@@ -64,7 +64,7 @@ table inet filter {
         ip saddr {{ lxd_host_network_part }}.0/24 tcp dport 9000 accept
         #
         # THE FOLLOWING IS EXPERIMENTAL
-        ip6 saddr {{ host_public_ipv6_prefix }}::{{lxd_host_network_ipv6_subnet}}:0/112 tcp dport 9000 accept
+        ip6 saddr {{ host_public_ipv6_prefix }}::{{ lxd_host_network_ipv6_subnet }}:0/112 tcp dport 9000 accept
         # END EXPERIMENTAL
         #
 
@@ -80,10 +80,10 @@ table inet filter {
         ## TCP Ports
         ############
 
-        {{range ls "service/haproxy/tcp-listeners"}}
-        # Allow TCP Port {{.Key}}
-        tcp dport {{.Key}} accept
-        {{ end }}
+        {{'{{'}}range ls "service/haproxy/tcp-listeners"{{'}}'}}
+        # Allow TCP Port {{'{{'}}.Key{{'}}'}}
+        tcp dport {{'{{'}}.Key{{'}}'}} accept
+        {{'{{'}} end {{'}}'}}
     }
 
     chain forward {
