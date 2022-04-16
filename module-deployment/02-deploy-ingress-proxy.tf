@@ -11,7 +11,7 @@
 ##
 resource "lxd_container" "ingress-proxy-v6" {
 
-  count = ( local.host_public_ipv6 == "true" ? 1 : 0 )
+  count = ( local.lxd_host_public_ipv6 == "true" ? 1 : 0 )
 
   remote     = var.host_id
   name       = "ingress-proxy"
@@ -135,7 +135,7 @@ resource "lxd_container" "ingress-proxy-v6" {
 ##
 resource "lxd_container" "ingress-proxy-v4" {
 
-  count = ( local.host_public_ipv6 == "true" ? 0 : 1 )
+  count = ( local.lxd_host_public_ipv6 == "true" ? 0 : 1 )
 
   remote     = var.host_id
   name       = "ingress-proxy"
