@@ -21,11 +21,11 @@ table inet filter {
         # Allow inbound traffic on loopback interface
         iifname "lo" accept
 
-        # Allow ICMPv6
-        icmpv6 type { destination-unreachable, packet-too-big, time-exceeded, parameter-problem, echo-request, echo-reply, nd-router-solicit, nd-router-advert, nd-neighbor-solicit, nd-neighbor-advert, ind-neighbor-solicit, ind-neighbor-advert } accept
+        # Allow ICMPv4
+        icmp type { echo-reply, destination-unreachable, echo-request, time-exceeded } accept
 
-        # Allow inbound ICMP echo-request
-        icmp type echo-request accept
+        # Allow ICMPv6
+        icmpv6 type { destination-unreachable, packet-too-big, time-exceeded, parameter-problem, echo-request, echo-reply, nd-router-solicit, nd-router-advert, nd-neighbor-solicit, nd-neighbor-advert, ind-neighbor-solicit, ind-neighbor-advert} accept
 
         # Allow IPv6 DHCPv6
         udp dport dhcpv6-client accept
