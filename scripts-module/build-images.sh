@@ -5,7 +5,7 @@
 
 # Default software versions
 webhook_version='2.8.0'
-consul_template_version='0.28.1'
+consul_template_version='0.29.0'
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
