@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: 2022 Wilfred Nicoll <xyzroller@rollyourown.xyz>
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-# Deploy Ingress Proxy for rollyourown.xyz modules and projects
+# Deploy Ingress Proxy for rollyourown modules and projects
 ###############################################################
 ##
 ## Ingress Proxy for IPv4 host 

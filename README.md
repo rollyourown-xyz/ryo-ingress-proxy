@@ -13,9 +13,9 @@ This module uses [Ansible](https://www.ansible.com/), [Packer](https://www.packe
 
 ## How to Use
 
-A rollyourown module contains automation code to configure, build, deploy, maintain, back up and restore a module for use by other rollyourown.xyz projects.
+A rollyourown module contains automation code to configure, build, deploy, maintain, back up and restore a module for use by other rollyourown projects.
 
-In itself, a module doesn’t provide a full end-to-end service, but rather provides a reusable building block that is used in a full rollyourown.xyz project as part of the end-to-end solution for that project.
+In itself, a module doesn’t provide a full end-to-end service, but rather provides a reusable building block that is used in a full rollyourown project as part of the end-to-end solution for that project.
 
 A detailed description for project developers of how to use this module in a project can be found in the [module's documentation](https://rollyourown.xyz/rollyourown/project_modules/ryo-ingress-proxy/).
 
