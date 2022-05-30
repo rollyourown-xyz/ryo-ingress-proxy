@@ -58,7 +58,7 @@ MODULE_ID="$(yq eval '.module_id' "$SCRIPT_DIR"/../configuration/configuration.y
 echo "Building images for "$MODULE_ID" module on "$hostname""
 echo ""
 echo "Building Ingress Proxy image"
-echo "Executing command: packer build -var \"host_id="$hostname"\" -var \"version="$version"\" -var \"remote=$remote_build\" -var \"webhook_version="$webhook_version"\" -var \"consul_template_version="$consul_template_version"\" "$SCRIPT_DIR"/../image-build/ingress-proxy.pkr.hcl"
+echo "Executing command: packer build -var \"host_id="$hostname"\" -var \"version="$version"\" -var \"remote="$remote_build"\" -var \"webhook_version="$webhook_version"\" -var \"consul_template_version="$consul_template_version"\" "$SCRIPT_DIR"/../image-build/ingress-proxy.pkr.hcl"
 echo ""
 packer build -var "host_id="$hostname"" -var "version="$version"" -var "remote="$remote_build"" -var "webhook_version="$webhook_version"" -var "consul_template_version="$consul_template_version"" "$SCRIPT_DIR"/../image-build/ingress-proxy.pkr.hcl
 echo ""
